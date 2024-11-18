@@ -1,0 +1,22 @@
+{
+  "name": "travelblog-backend",
+  "version": "1.0.0",
+  "description": "This is for a Travel Blog project. Backend will be Node.js(with http module) along with pg package.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    
+    "start": "node index.js",
+    "dev": "node -r dotenv/config --watch index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
