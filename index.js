@@ -1,33 +1,20 @@
-//Import http module
-import http from 'http';
-//Import CRUD operations
-import { createPost, deletePost, getPosts, getPostById, updatePost } from './crudOperations.js';
-// Import utility functions
-import { regex, returnErrorWithMessage } from './utils.js';
+import express from 'express';
+import { getPosts, getPostById, createPost, updatePost, deletePost } from './crudOperations.js';
 
-// Base resource
-const resource = '/posts';
-
-// Request handler to handle all requests
-const requestHandler = async (req, res) => {
-  const { method, url } = req;
-  
-  if (url === resource) {
-    if (method === 'GET') return await getPosts(req, res);
-    if (method === 'POST') return await createPost(req, res);
-    else return returnErrorWithMessage(res, 405, 'Method Not Allowed');
-  } else if (regex(resource).test(url)) {
-    if (method === 'GET') return await getPostById(req, res);
-    if (method === 'PUT') return await updatePost(req, res);
-    if (method === 'DELETE') return await deletePost(req, res);
-    else return returnErrorWithMessage(res, 405, 'Method Not Allowed');
-  } else {
-    return returnErrorWithMessage(res, 404, 'Resource Not Found');
-  }
-};
-// Create a server
-const server = http.createServer(requestHandler);
-// Set the port
+const app = express();
+//Set the port
 const port = 3000;
+//Middleware to parse JSON bodies
+app.use(express.json());
+
+//Routes
+app.get('/posts',getPosts);
+app.get('/posts/:id',getPostById);
+app.get('/posts',createPost);
+app.put('posts/:id',updatePost);
+app.delete('/posts/:id',deletePost);
+
 // Start the server
-server.listen(port, () => console.log(`Server running at http://localhost:${port}`));
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
