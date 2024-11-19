@@ -1,10 +1,13 @@
 import express from 'express';
 import { getPosts, getPostById, createPost, updatePost, deletePost } from './crudOperations.js';
 import 'dotenv/config';
+import cors from 'cors';
 
 const app = express();
 //Set the port
 const port = 3000;
+//Middleware that allows requests from frontend
+app.use(cors());
 //Middleware to parse JSON bodies
 app.use(express.json());
 
