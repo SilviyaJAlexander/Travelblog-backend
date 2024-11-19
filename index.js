@@ -1,5 +1,6 @@
 import express from 'express';
 import { getPosts, getPostById, createPost, updatePost, deletePost } from './crudOperations.js';
+import 'dotenv/config';
 
 const app = express();
 //Set the port
@@ -10,8 +11,8 @@ app.use(express.json());
 //Routes
 app.get('/posts',getPosts);
 app.get('/posts/:id',getPostById);
-app.get('/posts',createPost);
-app.put('posts/:id',updatePost);
+app.post('/posts',createPost);
+app.put('/posts/:id',updatePost);
 app.delete('/posts/:id',deletePost);
 
 // Start the server
