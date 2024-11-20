@@ -6,8 +6,8 @@ const PostCard = ({ post }) => {
           <h3 className="text-xl font-semibold">{post.title}</h3>
           <p className="text-sm text-gray-500">By {post.author}</p>
           <p className="text-gray-700 mt-2">{post.content.substring(0, 100)}...</p>
-          <button className="mt-4 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700">
-            View
+          <button className="mt-4 px-4 py-2 bg-sky-600 text-white rounded hover:bg-sky-800">
+            Read more
           </button>
         </div>
       </div>

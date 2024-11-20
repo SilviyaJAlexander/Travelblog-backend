@@ -11,13 +11,13 @@ const Header = () => {
         </h1>
         {/* Navigation Links */}
         <nav className="flex space-x-6">
-          <Link to="/" className="hover:text-purple-500">
+          <Link to="/" className="hover:text-sky-500">
             Home
           </Link>
-          <Link to="/create-post" className="hover:text-purple-500">
+          <Link to="/create-post" className="hover:text-sky-500">
             Create Post
           </Link>
-          <Link to="/edit-post/1" className="hover:text-purple-500">
+          <Link to="/edit-post/1" className="hover:text-sky-500">
             Edit Post
           </Link>
         </nav>

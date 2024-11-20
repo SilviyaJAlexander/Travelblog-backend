@@ -15,7 +15,7 @@ const Hero = () => {
         <p className="text-lg mt-2">
           Discover hidden gems, share experiences, and embark on unforgettable journeys.
         </p>
-        <button className="mt-4 bg-purple-600 hover:bg-purple-800 text-white py-2 px-6 rounded">
+        <button className="mt-4 bg-sky-800 hover:bg-sky-800 text-white py-2 px-6 rounded">
           Get Started
         </button>
       </div>
