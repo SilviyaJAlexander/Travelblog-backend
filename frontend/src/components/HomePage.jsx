@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
-import { getPosts } from '../utils/api';
+import { useEffect, useState } from "react";
+import { getPosts } from "../utils/api";
+import PostCard from "./PostCard";
+import Hero from "./Hero";
 
 const HomePage = () => {
   const [posts, setPosts] = useState([]);
@@ -7,10 +9,10 @@ const HomePage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const data = await getPosts();
-        setPosts(data);
+        const { data } = await getPosts();
+        setPosts(data); // Update state with the data array
       } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error("Error fetching posts:", error);
       }
     };
 
@@ -19,12 +21,12 @@ const HomePage = () => {
 
   return (
     <div>
-      <h1>Posts</h1>
-      <ul>
+      <Hero />
+      <section className="py-10 px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {posts.map((post) => (
-          <li key={post.id}>{post.title}</li>
+          <PostCard key={post.id} post={post} />
         ))}
-      </ul>
+      </section>
     </div>
   );
 };

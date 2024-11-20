@@ -3,39 +3,81 @@ import { createPost } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 
 const CreatePostForm = () => {
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    author: "",
+    title: "",
+    content: "",
+    cover: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createPost({ title, body });
-    navigate('/');
+    try {
+      const response = await createPost(formData);
+      console.log("Post created:", response);
+      // Clear form after successful submission
+      setFormData({
+        author: "",
+        title: "",
+        content: "",
+        cover: "",
+      });
+    } catch (error) {
+      console.error("Error creating post:", error);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Create Post</h1>
-      <div className="mb-4">
-        <label className="block font-semibold">Title</label>
+    <form onSubmit={handleSubmit} className="form-container">
+      <div>
+        <label htmlFor="author">Author:</label>
         <input
           type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="border rounded w-full p-2"
+          id="author"
+          name="author"
+          value={formData.author}
+          onChange={handleChange}
           required
         />
       </div>
-      <div className="mb-4">
-        <label className="block font-semibold">Body</label>
+      <div>
+        <label htmlFor="title">Title:</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="content">Content:</label>
         <textarea
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-          className="border rounded w-full p-2"
+          id="content"
+          name="content"
+          value={formData.content}
+          onChange={handleChange}
+          required
+        ></textarea>
+      </div>
+      <div>
+        <label htmlFor="cover">Cover (URL):</label>
+        <input
+          type="text"
+          id="cover"
+          name="cover"
+          value={formData.cover}
+          onChange={handleChange}
           required
         />
       </div>
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded">Create</button>
+      <button type="submit">Create Post</button>
     </form>
   );
 };

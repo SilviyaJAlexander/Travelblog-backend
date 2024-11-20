@@ -1,53 +1,102 @@
-import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getPostById, updatePost } from '../utils/api';
+const EditPost = ({ post }) => {
+  const [formData, setFormData] = useState({
+    author: post.author,
+    title: post.title,
+    content: post.content,
+    cover: post.cover,
+  });
 
-const EditPostForm = () => {
-  const { id } = useParams();
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-  const navigate = useNavigate();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-  useEffect(() => {
-    const fetchPost = async () => {
-      const data = await getPostById(id);
-      setTitle(data.title);
-      setBody(data.body);
-    };
-    fetchPost();
-  }, [id]);
+  const handleUpdate = async () => {
+    try {
+      const response = await updatePost(post.id, formData);
+      console.log("Post updated:", response);
+    } catch (error) {
+      console.error("Error updating post:", error);
+    }
+  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await updatePost(id, { title, body });
-    navigate('/');
+  const handleDelete = async () => {
+    try {
+      const response = await deletePost(post.id);
+      console.log("Post deleted:", response);
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Edit Post</h1>
+    <form className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
       <div className="mb-4">
-        <label className="block font-semibold">Title</label>
+        <label htmlFor="author" className="block text-gray-700 font-medium mb-1">Author</label>
         <input
           type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="border rounded w-full p-2"
+          id="author"
+          name="author"
+          value={formData.author}
+          onChange={handleChange}
+          className="w-full border border-gray-300 rounded px-3 py-2"
           required
         />
       </div>
       <div className="mb-4">
-        <label className="block font-semibold">Body</label>
-        <textarea
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-          className="border rounded w-full p-2"
+        <label htmlFor="title" className="block text-gray-700 font-medium mb-1">Title</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
+          className="w-full border border-gray-300 rounded px-3 py-2"
           required
         />
       </div>
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded">Update</button>
+      <div className="mb-4">
+        <label htmlFor="content" className="block text-gray-700 font-medium mb-1">Content</label>
+        <textarea
+          id="content"
+          name="content"
+          value={formData.content}
+          onChange={handleChange}
+          className="w-full border border-gray-300 rounded px-3 py-2"
+          rows="4"
+          required
+        ></textarea>
+      </div>
+      <div className="mb-4">
+        <label htmlFor="cover" className="block text-gray-700 font-medium mb-1">Cover (URL)</label>
+        <input
+          type="text"
+          id="cover"
+          name="cover"
+          value={formData.cover}
+          onChange={handleChange}
+          className="w-full border border-gray-300 rounded px-3 py-2"
+          required
+        />
+      </div>
+      <div className="flex space-x-4">
+        <button
+          type="button"
+          onClick={handleUpdate}
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+        >
+          Update
+        </button>
+        <button
+          type="button"
+          onClick={handleDelete}
+          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+        >
+          Delete
+        </button>
+      </div>
     </form>
   );
 };
 
-export default EditPostForm;
+export default EditPost;

@@ -1,5 +1,7 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
+import { Routes, Route } from 'react-router-dom';
+import Header from "./components/Header";
+import Hero from "./components/Hero";
+import Footer from "./components/Footer";
 import HomePage from './components/HomePage';
 import CreatePostForm from './components/CreatePostForm';
 import PostDetails from './components/PostDetails';
@@ -7,17 +9,31 @@ import EditPostForm from './components/EditPostForm';
 
 const App = () => {
   return (
-    <Router>
-      <Navbar />
-      <div className="container mx-auto p-4">
+    <div className="flex flex-col min-h-screen">
+      {/* Header */}
+      <Header />
+
+      
+      {/* Main Content */}
+      <main className="flex-grow bg-gray-100 py-6">
         <Routes>
+          {/* Home Page */}
           <Route path="/" element={<HomePage />} />
-          <Route path="/create" element={<CreatePostForm />} />
-          <Route path="/posts/:id" element={<PostDetails />} />
-          <Route path="/posts/edit/:id" element={<EditPostForm />} />
+
+          {/* Create Post Form */}
+          <Route path="/create-post" element={<CreatePostForm />} />
+
+          {/* Post Details */}
+          <Route path="/post/:id" element={<PostDetails />} />
+
+          {/* Edit Post Form */}
+          <Route path="/edit-post/:id" element={<EditPostForm />} />
         </Routes>
-      </div>
-    </Router>
+      </main>
+
+      {/* Footer */}
+      <Footer />
+    </div>
   );
 };
 
