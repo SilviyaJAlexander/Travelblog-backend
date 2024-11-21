@@ -1,18 +1,26 @@
+import { Link } from "react-router-dom";
+
 const PostCard = ({ post }) => {
-    return (
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
-        <img src={post.cover} alt={post.title} className="h-40 w-full object-cover" />
-        <div className="p-4">
-          <h3 className="text-xl font-semibold">{post.title}</h3>
-          <p className="text-sm text-gray-500">By {post.author}</p>
-          <p className="text-gray-700 mt-2">{post.content.substring(0, 100)}...</p>
-          <button className="mt-4 px-4 py-2 bg-sky-600 text-white rounded hover:bg-sky-800">
-            Read more
-          </button>
-        </div>
+  return (
+    <div className="bg-white rounded shadow-md overflow-hidden">
+      <img
+        src={post.cover}
+        alt={post.title}
+        className="w-full h-40 object-cover"
+      />
+      <div className="p-4">
+        <h3 className="text-xl font-bold">{post.title}</h3>
+        <p className="text-gray-500 text-sm">By {post.author}</p>
+        <p className="mt-2 text-gray-700">{post.content.substring(0, 100)}...</p>
+        <Link
+          to={`/post/${post.id}`}
+          className="block mt-4 text-sky-600 font-semibold hover:underline"
+        >
+          Read more
+        </Link>
       </div>
-    );
-  };
-  
-  export default PostCard;
-  
+    </div>
+  );
+};
+
+export default PostCard;

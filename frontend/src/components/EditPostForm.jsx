@@ -1,10 +1,25 @@
-const EditPost = ({ post }) => {
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getPostById, updatePost } from '../utils/api';
+
+const EditPostForm = () => {
+  const { id } = useParams(); // Extract the post ID from the URL
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    author: post.author,
-    title: post.title,
-    content: post.content,
-    cover: post.cover,
+    author: '',
+    title: '',
+    content: '',
+    cover: '',
   });
+
+  useEffect(() => {
+    // Fetch the post details to pre-fill the form
+    const fetchPost = async () => {
+      const { data } = await getPostById(id);
+      setFormData(data);
+    };
+    fetchPost();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -13,24 +28,16 @@ const EditPost = ({ post }) => {
 
   const handleUpdate = async () => {
     try {
-      const response = await updatePost(post.id, formData);
-      console.log("Post updated:", response);
+      await updatePost(id, formData);
+      navigate(`/post/${id}`); // Navigate back to the post details page after update
     } catch (error) {
       console.error("Error updating post:", error);
     }
   };
 
-  const handleDelete = async () => {
-    try {
-      const response = await deletePost(post.id);
-      console.log("Post deleted:", response);
-    } catch (error) {
-      console.error("Error deleting post:", error);
-    }
-  };
-
   return (
     <form className="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg">
+      <h2 className="text-2xl font-bold mb-6 text-center">Edit Post</h2>
       <div className="mb-4">
         <label htmlFor="author" className="block text-gray-700 font-medium mb-1">Author</label>
         <input
@@ -79,24 +86,17 @@ const EditPost = ({ post }) => {
           required
         />
       </div>
-      <div className="flex space-x-4">
-        <button
-          type="button"
-          onClick={handleUpdate}
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-        >
-          Update
-        </button>
-        <button
-          type="button"
-          onClick={handleDelete}
-          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-        >
-          Delete
-        </button>
+      <div className="flex justify-center mt-4">
+      <button
+        type="button"
+        onClick={handleUpdate}
+        className="bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-800"
+      >
+        Update
+      </button>
       </div>
     </form>
   );
 };
 
-export default EditPost;
+export default EditPostForm;
