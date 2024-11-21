@@ -33,7 +33,8 @@ const CreatePostForm = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-beige-100">
+    <div className="max-w-lg mx-auto p-6 bg-beige-100">
+
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-md bg-black-100 p-6 rounded shadow-lg border"

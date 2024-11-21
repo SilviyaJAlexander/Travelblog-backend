@@ -57,7 +57,7 @@ const PostDetails = () => {
       <div className="mt-4 text-lg text-gray-700">{post.content}</div>
 
       {/* Buttons */}
-      <div className="mt-6 flex gap-4">
+      <div className="mt-6 flex justify-between">
         <button
           onClick={handleDelete}
           className="bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-800"
